@@ -1,3 +1,40 @@
-/.vscode
-/Fister-Franko-lab5-postman-collectionjson
-/target
+# Maven specific
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Eclipse specific
+.classpath
+.project
+.settings/
+
+# IntelliJ IDEA specific
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# NetBeans specific
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# GlassFish specific
+glassfish/domains/domain1/generated/
+glassfish/domains/domain1/osgi-cache/
+glassfish/domains/domain1/logs/
+glassfish/domains/domain1/applications/
+
+# Visual Studio Code specific
+.vscode/
+
+Fister-Franko-lab5-postman-collectionjson
