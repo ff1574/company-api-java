@@ -1,12 +1,141 @@
 <!DOCTYPE html>
-
 <html lang="en" xml:lang="en">
   <head>
-    <title>TODO supply a title</title>
+    <title>Company Management API</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+      }
+      ul {
+        margin: 10px 0;
+      }
+    </style>
   </head>
   <body>
-    <div>Welcome to Company API</div>
+    <h1>Welcome to the Company Management API</h1>
+    <p>
+      This project is a RESTful API showcasing backend and DevOps capabilities
+      for managing a company’s data, including departments, employees, and
+      timecards.
+    </p>
+
+    <h2>Project Overview</h2>
+    <p>
+      The API is built with Java, Maven, and runs on a GlassFish server. It
+      includes CRUD operations for managing:
+    </p>
+    <ul>
+      <li>
+        <strong>Departments</strong>: Add, view, update, and delete company
+        departments.
+      </li>
+      <li>
+        <strong>Employees</strong>: Manage employee records and their
+        affiliations.
+      </li>
+      <li>
+        <strong>Timecards</strong>: Record and manage employee work hours.
+      </li>
+      <li>
+        <strong>Company-Wide Data Deletion</strong>: Delete all records for a
+        specified company, including departments, employees, and timecards.
+      </li>
+    </ul>
+
+    <h2>API Endpoints</h2>
+
+    <h3>Department Endpoints</h3>
+    <ul>
+      <li>
+        <strong>GET All Departments</strong>:
+        <code>GET /api/departments?company=company-name</code>
+      </li>
+      <li>
+        <strong>GET Single Department</strong>:
+        <code>GET /api/department?company=company-name&dept_id=1</code>
+      </li>
+      <li>
+        <strong>POST New Department</strong>:
+        <code>POST /api/department</code> (Form Data: company, dept_name, dept_no,
+        location)
+      </li>
+      <li>
+        <strong>PUT Update Department</strong>:
+        <code>PUT /api/department</code> (JSON Body)
+      </li>
+      <li>
+        <strong>DELETE Department</strong>:
+        <code>DELETE /api/department?company=company-name&dept_id=1</code>
+      </li>
+    </ul>
+
+    <h3>Employee Endpoints</h3>
+    <ul>
+      <li>
+        <strong>GET All Employees</strong>:
+        <code>GET /api/employees?company=company-name</code>
+      </li>
+      <li>
+        <strong>GET Single Employee</strong>:
+        <code>GET /api/employee?emp_id=1</code>
+      </li>
+      <li>
+        <strong>POST New Employee</strong>: <code>POST /api/employee</code> (Form
+        Data: company, emp_name, emp_no, hire_date, job, salary, dept_id,
+        mng_id)
+      </li>
+      <li>
+        <strong>PUT Update Employee</strong>: <code>PUT /api/employee</code> (JSON
+        Body)
+      </li>
+      <li>
+        <strong>DELETE Employee</strong>: <code>DELETE /api/employee?emp_id=1</code>
+      </li>
+    </ul>
+
+    <h3>Timecard Endpoints</h3>
+    <ul>
+      <li>
+        <strong>GET All Timecards</strong>: <code>GET /api/timecards?emp_id=1</code>
+      </li>
+      <li>
+        <strong>GET Single Timecard</strong>:
+        <code>GET /api/timecard?timecard_id=1</code>
+      </li>
+      <li>
+        <strong>POST New Timecard</strong>: <code>POST /api/timecard</code> (Form
+        Data: start_time, end_time, emp_id)
+      </li>
+      <li>
+        <strong>PUT Update Timecard</strong>: <code>PUT /api/timecard</code> (JSON
+        Body)
+      </li>
+      <li>
+        <strong>DELETE Timecard</strong>:
+        <code>DELETE /api/timecard?timecard_id=1</code>
+      </li>
+    </ul>
+
+    <h3>Company-Wide Data Deletion</h3>
+    <ul>
+      <li>
+        <strong>DELETE All Company Data</strong>:
+        <code>DELETE /api/company/deleteAll?company=company-name</code>
+      </li>
+    </ul>
+
+    <h2>Getting Started</h2>
+    <p>
+      For information on building and running the project, please refer to the
+      project README or follow the steps to deploy the API on a GlassFish
+      server.
+    </p>
   </body>
 </html>
