@@ -1,4 +1,3 @@
-
 # Company Management API
 
 ## Project Overview
@@ -27,12 +26,14 @@ The API is built with Java, Maven, and runs on a GlassFish server. The project i
 ### Setup and Run
 
 1. **Clone the Repository**
+
    ```bash
    git clone https://github.com/ff1574/company-api-java.git
    cd company-management-api
    ```
 
 2. **Build the Project with Maven**
+
    - Open the VSCode terminal (`Ctrl+``) and run:
      ```bash
      mvn clean compile package
@@ -40,6 +41,7 @@ The API is built with Java, Maven, and runs on a GlassFish server. The project i
    - This command will compile the code, run tests, and package the application as a WAR file.
 
 3. **Deploy the Project on GlassFish**
+
    - Find the generated `.war` file in the `target` folder and deploy it on the GlassFish server.
 
 4. **Access the API**
@@ -51,23 +53,27 @@ The API is built with Java, Maven, and runs on a GlassFish server. The project i
 
 ## Department Endpoints
 
-- **GET All Departments**: `GET http://localhost:8080/your-app-context/departments`
-  - **Query Parameters**:
-    - `company`: *string* - The name of the company.
+- **GET All Departments**: `GET http://localhost:8080/your-app-context/api/departments`
 
-- **GET Single Department**: `GET http://localhost:8080/your-app-context/department`
   - **Query Parameters**:
-    - `company`: *string* - The name of the company.
-    - `dept_id`: *integer* - The department ID.
+    - `company`: _string_ - The name of the company.
 
-- **POST New Department**: `POST http://localhost:8080/your-app-context/department`
+- **GET Single Department**: `GET http://localhost:8080/your-app-context/api/department`
+
+  - **Query Parameters**:
+    - `company`: _string_ - The name of the company.
+    - `dept_id`: _integer_ - The department ID.
+
+- **POST New Department**: `POST http://localhost:8080/your-app-context/api/department`
+
   - **Form Data**:
-    - `company`: *string* - The name of the company.
-    - `dept_name`: *string* - The name of the department.
-    - `dept_no`: *string* - The department number.
-    - `location`: *string* - The department location.
+    - `company`: _string_ - The name of the company.
+    - `dept_name`: _string_ - The name of the department.
+    - `dept_no`: _string_ - The department number.
+    - `location`: _string_ - The department location.
 
-- **PUT Update Department**: `PUT http://localhost:8080/your-app-context/department`
+- **PUT Update Department**: `PUT http://localhost:8080/your-app-context/api/department`
+
   - **Body (JSON)**:
     ```json
     {
@@ -79,35 +85,39 @@ The API is built with Java, Maven, and runs on a GlassFish server. The project i
     }
     ```
 
-- **DELETE Department**: `DELETE http://localhost:8080/your-app-context/department`
+- **DELETE Department**: `DELETE http://localhost:8080/your-app-context/api/department`
   - **Query Parameters**:
-    - `company`: *string* - The name of the company.
-    - `dept_id`: *integer* - The department ID.
+    - `company`: _string_ - The name of the company.
+    - `dept_id`: _integer_ - The department ID.
 
 ---
 
 ## Employee Endpoints
 
-- **GET All Employees**: `GET http://localhost:8080/your-app-context/employees`
-  - **Query Parameters**:
-    - `company`: *string* - The name of the company.
+- **GET All Employees**: `GET http://localhost:8080/your-app-context/api/employees`
 
-- **GET Single Employee**: `GET http://localhost:8080/your-app-context/employee`
   - **Query Parameters**:
-    - `emp_id`: *integer* - The employee ID.
+    - `company`: _string_ - The name of the company.
 
-- **POST New Employee**: `POST http://localhost:8080/your-app-context/employee`
+- **GET Single Employee**: `GET http://localhost:8080/your-app-context/api/employee`
+
+  - **Query Parameters**:
+    - `emp_id`: _integer_ - The employee ID.
+
+- **POST New Employee**: `POST http://localhost:8080/your-app-context/api/employee`
+
   - **Form Data**:
-    - `company`: *string* - The name of the company.
-    - `emp_name`: *string* - The name of the employee.
-    - `emp_no`: *string* - The employee number.
-    - `hire_date`: *string* - The hire date (e.g., "2023-10-15").
-    - `job`: *string* - The job title.
-    - `salary`: *double* - The salary amount.
-    - `dept_id`: *integer* - The department ID.
-    - `mng_id`: *integer* (optional) - The manager ID.
+    - `company`: _string_ - The name of the company.
+    - `emp_name`: _string_ - The name of the employee.
+    - `emp_no`: _string_ - The employee number.
+    - `hire_date`: _string_ - The hire date (e.g., "2023-10-15").
+    - `job`: _string_ - The job title.
+    - `salary`: _double_ - The salary amount.
+    - `dept_id`: _integer_ - The department ID.
+    - `mng_id`: _integer_ (optional) - The manager ID.
 
-- **PUT Update Employee**: `PUT http://localhost:8080/your-app-context/employee`
+- **PUT Update Employee**: `PUT http://localhost:8080/your-app-context/api/employee`
+
   - **Body (JSON)**:
     ```json
     {
@@ -123,29 +133,33 @@ The API is built with Java, Maven, and runs on a GlassFish server. The project i
     }
     ```
 
-- **DELETE Employee**: `DELETE http://localhost:8080/your-app-context/employee`
+- **DELETE Employee**: `DELETE http://localhost:8080/your-app-context/api/employee`
   - **Query Parameters**:
-    - `emp_id`: *integer* - The employee ID.
+    - `emp_id`: _integer_ - The employee ID.
 
 ---
 
 ## Timecard Endpoints
 
-- **GET All Timecards**: `GET http://localhost:8080/your-app-context/timecards`
-  - **Query Parameters**:
-    - `emp_id`: *integer* - The employee ID.
+- **GET All Timecards**: `GET http://localhost:8080/your-app-context/api/timecards`
 
-- **GET Single Timecard**: `GET http://localhost:8080/your-app-context/timecard`
   - **Query Parameters**:
-    - `timecard_id`: *integer* - The timecard ID.
+    - `emp_id`: _integer_ - The employee ID.
 
-- **POST New Timecard**: `POST http://localhost:8080/your-app-context/timecard`
+- **GET Single Timecard**: `GET http://localhost:8080/your-app-context/api/timecard`
+
+  - **Query Parameters**:
+    - `timecard_id`: _integer_ - The timecard ID.
+
+- **POST New Timecard**: `POST http://localhost:8080/your-app-context/api/timecard`
+
   - **Form Data**:
-    - `start_time`: *string* - Start time (e.g., "2024-10-25 08:00:00").
-    - `end_time`: *string* - End time (e.g., "2024-10-25 17:00:00").
-    - `emp_id`: *integer* - The employee ID.
+    - `start_time`: _string_ - Start time (e.g., "2024-10-25 08:00:00").
+    - `end_time`: _string_ - End time (e.g., "2024-10-25 17:00:00").
+    - `emp_id`: _integer_ - The employee ID.
 
-- **PUT Update Timecard**: `PUT http://localhost:8080/your-app-context/timecard`
+- **PUT Update Timecard**: `PUT http://localhost:8080/your-app-context/api/timecard`
+
   - **Body (JSON)**:
     ```json
     {
@@ -156,18 +170,20 @@ The API is built with Java, Maven, and runs on a GlassFish server. The project i
     }
     ```
 
-- **DELETE Timecard**: `DELETE http://localhost:8080/your-app-context/timecard`
+- **DELETE Timecard**: `DELETE http://localhost:8080/your-app-context/api/timecard`
   - **Query Parameters**:
-    - `timecard_id`: *integer* - The timecard ID.
+    - `timecard_id`: _integer_ - The timecard ID.
 
 ---
 
 ## Company-Wide Data Deletion
 
-- **DELETE All Company Data**: `DELETE http://localhost:8080/your-app-context/company/deleteAll`
+- **DELETE All Company Data**: `DELETE http://localhost:8080/your-app-context/api/company/deleteAll`
   - **Query Parameters**:
-    - `company`: *string* - The name of the company.
+    - `company`: _string_ - The name of the company.
+
 ---
+
 ## Notes
 
 - Ensure GlassFish is running on the configured port (default `8080`) before attempting to access the endpoints.
