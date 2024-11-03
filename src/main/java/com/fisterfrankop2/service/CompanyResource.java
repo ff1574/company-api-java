@@ -77,7 +77,7 @@ public class CompanyResource {
             // If all deletions were successful
             logger.log(Level.INFO, "All records deleted successfully for company: {0}", companyName);
             return Response.status(Response.Status.OK)
-                    .entity(new SuccessResponse("All records deleted successfully for company: " + companyName))
+                    .entity(new SuccessResponse(companyName + "'s information deleted successfully."))
                     .build();
 
         } catch (Exception e) {
