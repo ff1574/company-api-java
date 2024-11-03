@@ -1,0 +1,1617 @@
+{
+	"info": {
+		"_postman_id": "b2b04961-c747-4166-a360-93e697b82bc5",
+		"name": "Fister_Franko",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39218685"
+	},
+	"item": [
+		{
+			"name": "Company",
+			"item": [
+				{
+					"name": "Delete Company",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Successful delete\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_path}}/company?company={{studentID}}",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"company"
+							],
+							"query": [
+								{
+									"key": "company",
+									"value": "{{studentID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Departments",
+			"item": [
+				{
+					"name": "Departments - ALL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"All departments successfully returned\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"dept_id\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_path}}/departments?company={{studentID}}",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"departments"
+							],
+							"query": [
+								{
+									"key": "company",
+									"value": "{{studentID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response included 'Error'. Could not get department with dept_id 0\", function () {\r",
+									"    pm.expect(pm.response.text().toLowerCase()).to.include(\"error\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_path}}/department?company={{studentID}}&dept_id=12",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"department"
+							],
+							"query": [
+								{
+									"key": "company",
+									"value": "{{studentID}}"
+								},
+								{
+									"key": "dept_id",
+									"value": "12"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Successful Initial Insert\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"dept_id\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "company",
+									"value": "{{studentID}}",
+									"type": "text"
+								},
+								{
+									"key": "dept_name",
+									"value": "Slacking Dept",
+									"type": "text"
+								},
+								{
+									"key": "dept_no",
+									"value": "{{studentID}}-53",
+									"type": "text"
+								},
+								{
+									"key": "location",
+									"value": "RIT",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_path}}/department",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"department"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Department - ERROR - dept_no",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Bad department was not inserted, dept_no already exists.\", function () {\r",
+									"    pm.expect(pm.response.text().toLowerCase()).to.include(\"error\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "company",
+									"value": "{{studentID}}",
+									"type": "text"
+								},
+								{
+									"key": "dept_name",
+									"value": "mystery",
+									"type": "text"
+								},
+								{
+									"key": "dept_no",
+									"value": "d50",
+									"type": "text"
+								},
+								{
+									"key": "location",
+									"value": "RIT",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_path}}/department",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"department"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has updated department names\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"NEW NAME\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dept_id\": 17,\r\n    \"company\": \"{{studentID}}\",\r\n    \"dept_name\":\"Non Slacking Dept\",\r\n    \"dept_no\": \"W728\",\r\n    \"location\": \"York\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_path}}/department",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"department"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Department - ERROR - dept_no",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response contained 'error'. Could not update non-existent department \", function () {\r",
+									"    pm.expect(pm.response.text().toLowerCase()).to.include(\"error\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"company\": \"{{studentID}}\",\r\n    \"dept_id\":17,\r\n    \"dept_name\":\"NEW NAME\",\r\n    \"dept_no\": \"d50\",\r\n    \"location\": \"Maine\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_path}}/department",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"department"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Department - ERROR - dept_id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"company\": \"{{studentID}}\",\r\n    \"dept_id\": 500,\r\n    \"dept_name\":\"NEW NAME\",\r\n    \"dept_no\": \"{{studentID}}-d10\",\r\n    \"location\": \"Maine\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_path}}/department",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"department"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Successful Delete\", function () {\r",
+									"    pm.expect(pm.response.text().toLowerCase()).to.include(\"success\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_path}}/department?company={{studentID}}&dept_id=17",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"department"
+							],
+							"query": [
+								{
+									"key": "company",
+									"value": "{{studentID}}"
+								},
+								{
+									"key": "dept_id",
+									"value": "17"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Department - ERROR - ?",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// pm.test(\"Status code is 200\", function () {\r",
+									"//     pm.response.to.have.status(200);\r",
+									"// });\r",
+									"pm.test(\"Response Includes 'error'. Could Not Delete Non-Existent Department\", function () {\r",
+									"    pm.expect(pm.response.text().toLowerCase()).to.include(\"error\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_path}}/department?company={{studentID}}&dept_id=0",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"department"
+							],
+							"query": [
+								{
+									"key": "company",
+									"value": "{{studentID}}"
+								},
+								{
+									"key": "dept_id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employees",
+			"item": [
+				{
+					"name": "Employees - ALL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"All employees successfully returned\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"emp_id\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_path}}/employees?company={{studentID}}",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"employees"
+							],
+							"query": [
+								{
+									"key": "company",
+									"value": "{{studentID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Successful Retrieval of Employee\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"emp_id\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_path}}/employee?company={{studentID}}&emp_id=29",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"employee"
+							],
+							"query": [
+								{
+									"key": "company",
+									"value": "{{studentID}}"
+								},
+								{
+									"key": "emp_id",
+									"value": "29"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Successful Insert\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"emp_id\");\r",
+									"});\r",
+									"var json = JSON.parse(responseBody);\r",
+									"console.log(json)\r",
+									"pm.collectionVariables.set(\"good_insert_emp_id\", json.emp_id || json.success.emp_id || 0);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "company",
+									"value": "{{studentID}}",
+									"type": "text"
+								},
+								{
+									"key": "emp_name",
+									"value": "Njofra",
+									"type": "text"
+								},
+								{
+									"key": "emp_no",
+									"value": "{{studentID}}-52",
+									"type": "text"
+								},
+								{
+									"key": "hire_date",
+									"value": "{{lastMonday}}",
+									"type": "text"
+								},
+								{
+									"key": "job",
+									"value": "wmc",
+									"type": "text"
+								},
+								{
+									"key": "salary",
+									"value": "5000.0",
+									"type": "text"
+								},
+								{
+									"key": "dept_id",
+									"value": "{{good_insert_dept_id}}",
+									"type": "text"
+								},
+								{
+									"key": "mng_id",
+									"value": "{{good_insert_manager_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_path}}/employee",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Employee - ERROR - future date",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Successful Insert\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"emp_id\");\r",
+									"});\r",
+									"var json = JSON.parse(responseBody);\r",
+									"console.log(json)\r",
+									"pm.collectionVariables.set(\"good_insert_emp_id\", json.emp_id || json.success.emp_id || 0);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "company",
+									"value": "{{studentID}}",
+									"type": "text"
+								},
+								{
+									"key": "emp_name",
+									"value": "Frankomir",
+									"type": "text"
+								},
+								{
+									"key": "emp_no",
+									"value": "{{studentID}}-21",
+									"type": "text"
+								},
+								{
+									"key": "hire_date",
+									"value": "2024-12-10",
+									"type": "text"
+								},
+								{
+									"key": "job",
+									"value": "wmc",
+									"type": "text"
+								},
+								{
+									"key": "salary",
+									"value": "5000.0",
+									"type": "text"
+								},
+								{
+									"key": "dept_id",
+									"value": "{{good_insert_dept_id}}",
+									"type": "text"
+								},
+								{
+									"key": "mng_id",
+									"value": "{{good_insert_manager_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_path}}/employee",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Employee - ERROR - weekend",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Successful Insert\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"emp_id\");\r",
+									"});\r",
+									"var json = JSON.parse(responseBody);\r",
+									"console.log(json)\r",
+									"pm.collectionVariables.set(\"good_insert_emp_id\", json.emp_id || json.success.emp_id || 0);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "company",
+									"value": "{{studentID}}",
+									"type": "text"
+								},
+								{
+									"key": "emp_name",
+									"value": "Frankomir",
+									"type": "text"
+								},
+								{
+									"key": "emp_no",
+									"value": "{{studentID}}-23",
+									"type": "text"
+								},
+								{
+									"key": "hire_date",
+									"value": "{{lastSunday}}",
+									"type": "text"
+								},
+								{
+									"key": "job",
+									"value": "wmc",
+									"type": "text"
+								},
+								{
+									"key": "salary",
+									"value": "5000.0",
+									"type": "text"
+								},
+								{
+									"key": "dept_id",
+									"value": "{{good_insert_dept_id}}",
+									"type": "text"
+								},
+								{
+									"key": "mng_id",
+									"value": "{{good_insert_manager_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_path}}/employee",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has updated employee information\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"bdftest\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"company\": \"{{studentID}}\",\r\n    \"emp_id\":34,\r\n    \"emp_name\":\"Franjomir Tudman\",\r\n    \"emp_no\": \"{{studentID}}-55\",\r\n    \"hire_date\": \"{{lastMonday}}\",\r\n    \"job\": \"Works the mines\",\r\n    \"salary\": 60000.0,\r\n    \"dept_id\": {{good_insert_dept_id}},\r\n    \"mng_id\": {{good_insert_manager_id}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_path}}/employee",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Employee - ERROR - future date",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has updated employee information\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"bdftest\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"company\": \"{{studentID}}\",\r\n    \"emp_id\":30,\r\n    \"emp_name\":\"Franjomir Tudman\",\r\n    \"emp_no\": \"{{studentID}}-bdftest\",\r\n    \"hire_date\": \"2024-12-10\",\r\n    \"job\": \"Works the mines\",\r\n    \"salary\": 60000.0,\r\n    \"dept_id\": {{good_insert_dept_id}},\r\n    \"mng_id\": {{good_insert_manager_id}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_path}}/employee",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Employee - ERROR - weekend",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has updated employee information\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"bdftest\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"company\": \"{{studentID}}\",\r\n    \"emp_id\":30,\r\n    \"emp_name\":\"Franjomir Tudman\",\r\n    \"emp_no\": \"{{studentID}}-bdftest\",\r\n    \"hire_date\": \"{{lastSunday}}\",\r\n    \"job\": \"Works the mines\",\r\n    \"salary\": 60000.0,\r\n    \"dept_id\": {{good_insert_dept_id}},\r\n    \"mng_id\": {{good_insert_manager_id}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_path}}/employee",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Successful Delete\", function () {\r",
+									"    pm.expect(pm.response.text().toLowerCase()).to.include(\"success\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_path}}/employee?company={{studentID}}&emp_id=32",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"employee"
+							],
+							"query": [
+								{
+									"key": "company",
+									"value": "{{studentID}}"
+								},
+								{
+									"key": "emp_id",
+									"value": "32"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Timecards",
+			"item": [
+				{
+					"name": "Timecards - ALL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_path}}/timecards?emp_id=30",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecards"
+							],
+							"query": [
+								{
+									"key": "emp_id",
+									"value": "30"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timecards - One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_path}}/timecard?timecard_id=14",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecard"
+							],
+							"query": [
+								{
+									"key": "timecard_id",
+									"value": "14"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timecard",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "start_time",
+									"value": "2024-11-1 10:00:00",
+									"type": "text"
+								},
+								{
+									"key": "end_time",
+									"value": "2024-11-1 18:00:00",
+									"type": "text"
+								},
+								{
+									"key": "emp_id",
+									"value": "30",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_path}}/timecard",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timecard - ERROR - Two weeks ago",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "start_time",
+									"value": "2024-10-24 10:00:00",
+									"type": "text"
+								},
+								{
+									"key": "end_time",
+									"value": "2024-10-24 18:00:00",
+									"type": "text"
+								},
+								{
+									"key": "emp_id",
+									"value": "30",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_path}}/timecard",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timecard - ERROR - Same day endtime",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "start_time",
+									"value": "2024-10-27 10:00:00",
+									"type": "text"
+								},
+								{
+									"key": "end_time",
+									"value": "2024-10-28 18:00:00",
+									"type": "text"
+								},
+								{
+									"key": "emp_id",
+									"value": "30",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_path}}/timecard",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timecard - ERROR - Less than one hour timecard",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "start_time",
+									"value": "2024-10-28 10:00:00",
+									"type": "text"
+								},
+								{
+									"key": "end_time",
+									"value": "2024-10-28 10:30:00",
+									"type": "text"
+								},
+								{
+									"key": "emp_id",
+									"value": "30",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_path}}/timecard",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timecard - ERROR - Weekend",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "start_time",
+									"value": "2024-10-27 10:00:00",
+									"type": "text"
+								},
+								{
+									"key": "end_time",
+									"value": "2024-10-27 12:00:00",
+									"type": "text"
+								},
+								{
+									"key": "emp_id",
+									"value": "30",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_path}}/timecard",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timecard - ERROR - Between 6 and 18",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "start_time",
+									"value": "2024-10-28 02:00:00",
+									"type": "text"
+								},
+								{
+									"key": "end_time",
+									"value": "2024-10-28 10:30:00",
+									"type": "text"
+								},
+								{
+									"key": "emp_id",
+									"value": "30",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_path}}/timecard",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timecard - ERROR - Same day timecard",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "start_time",
+									"value": "2024-10-28 10:00:00",
+									"type": "text"
+								},
+								{
+									"key": "end_time",
+									"value": "2024-10-28 16:30:00",
+									"type": "text"
+								},
+								{
+									"key": "emp_id",
+									"value": "30",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_path}}/timecard",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timecard",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"timecard_id\":13,\r\n    \"emp_id\":24,\r\n    \"start_time\":\"2024-10-25 18:00:00\",\r\n    \"end_time\":\"2024-10-25 2:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_path}}/timecard",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timecard - ERROR - Two weeks ago",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"timecard_id\":15,\r\n    \"emp_id\":30,\r\n    \"start_time\":\"2024-10-24 10:00:00\",\r\n    \"end_time\":\"2024-10-24 18:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_path}}/timecard",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timecard - ERROR - Same day endtime",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"timecard_id\":15,\r\n    \"emp_id\":30,\r\n    \"start_time\":\"2024-10-28 18:00:00\",\r\n    \"end_time\":\"2024-10-29 2:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_path}}/timecard",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timecard - ERROR - Less than one hour timecard",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"timecard_id\":15,\r\n    \"emp_id\":30,\r\n    \"start_time\":\"2024-10-28 18:00:00\",\r\n    \"end_time\":\"2024-10-28 18:30:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_path}}/timecard",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timecard - ERROR - Weekend",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"timecard_id\":15,\r\n    \"emp_id\":30,\r\n    \"start_time\":\"2024-11-2 18:00:00\",\r\n    \"end_time\":\"2024-11-2 20:30:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_path}}/timecard",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timecard - ERROR - Between 6 and 18",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"timecard_id\":15,\r\n    \"emp_id\":30,\r\n    \"start_time\":\"2024-11-1 2:00:00\",\r\n    \"end_time\":\"2024-11-1 20:30:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_path}}/timecard",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timecard - ERROR - Same day timecard",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"timecard_id\":15,\r\n    \"emp_id\":30,\r\n    \"start_time\":\"2024-11-1 10:00:00\",\r\n    \"end_time\":\"2024-11-1 16:30:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_path}}/timecard",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timecard",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_path}}/timecard?timecard_id=18",
+							"host": [
+								"{{base_path}}"
+							],
+							"path": [
+								"timecard"
+							],
+							"query": [
+								{
+									"key": "timecard_id",
+									"value": "18"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Creates collection variables: lastSunday, lastMonday",
+					"",
+					"function formatDate(date) {",
+					"    var d = new Date(date),",
+					"        month = '' + (d.getMonth() + 1),",
+					"        day = '' + d.getDate(),",
+					"        year = d.getFullYear();",
+					"",
+					"    if (month.length < 2) ",
+					"        month = '0' + month;",
+					"    if (day.length < 2) ",
+					"        day = '0' + day;",
+					"",
+					"    return [year, month, day].join('-');",
+					"}",
+					"",
+					"var now = new Date();",
+					"var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());",
+					"var lastSunday = new Date(today.setDate(today.getDate()-today.getDay()));",
+					"pm.collectionVariables.set(\"lastSunday\",formatDate(lastSunday))",
+					" ",
+					"var prevMonday = new Date();",
+					"prevMonday.setDate(prevMonday.getDate() - (prevMonday.getDay() + 6) % 7);",
+					"pm.collectionVariables.set(\"lastMonday\", formatDate(prevMonday)); ",
+					"",
+					"console.log(pm.collectionVariables)",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_path",
+			"value": "localhost:8080/project2-1.0-SNAPSHOT/api"
+		},
+		{
+			"key": "studentID",
+			"value": "ff1574"
+		},
+		{
+			"key": "good_insert_dept_id",
+			"value": "11"
+		},
+		{
+			"key": "good_delete_dept_id",
+			"value": "11"
+		},
+		{
+			"key": "good_insert_emp_id",
+			"value": "2"
+		},
+		{
+			"key": "good_delete_emp_id",
+			"value": "40"
+		},
+		{
+			"key": "dateStr",
+			"value": "2021-11-08 08:00:00"
+		},
+		{
+			"key": "dateStr2",
+			"value": "2021-11-08 17:00:00"
+		},
+		{
+			"key": "good_insert_timecard_id",
+			"value": "1"
+		},
+		{
+			"key": "good_delete_timecard_id",
+			"value": "46"
+		},
+		{
+			"key": "good_insert_manager_id",
+			"value": "36"
+		},
+		{
+			"key": "lastSunday",
+			"value": ""
+		},
+		{
+			"key": "lastMonday",
+			"value": ""
+		}
+	]
+}

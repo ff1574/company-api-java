@@ -37,4 +37,5 @@ glassfish/domains/domain1/applications/
 # Visual Studio Code specific
 .vscode/
 
-Fister-Franko-lab5-postman-collectionjson
+# Miscellaneous
+*.zip
