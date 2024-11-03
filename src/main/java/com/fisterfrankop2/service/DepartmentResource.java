@@ -92,18 +92,14 @@ public class DepartmentResource {
         try {
             logger.log(Level.INFO, "Inserting new department for company {0}", companyName);
 
-            // Check if dept_no is unique across all departments
-            List<Department> allDepartments = this.department.getAll(companyName);
-            for (Department dept : allDepartments) {
-                if (dept.getDeptNo().equals(deptNo)) {
-                    logger.log(Level.WARNING, "Department number {0} must be unique", deptNo);
-                    return Response.status(Response.Status.BAD_REQUEST)
-                            .entity(new ErrorResponse("Department number must be unique")).build();
-                }
+            // Validate unique department number
+            if (!department.validateUniqueDeptNo(deptNo, companyName, null)) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity(new ErrorResponse("Department number must be unique")).build();
             }
 
             Department newDept = new Department(companyName, deptName, deptNo, location);
-            newDept = this.department.insertDepartment(newDept);
+            newDept = department.insertDepartment(newDept);
             if (newDept.getId() > 0) {
                 logger.log(Level.INFO, "Department inserted successfully: {0}", newDept);
                 return Response.status(Response.Status.CREATED)
@@ -130,28 +126,21 @@ public class DepartmentResource {
             Gson gson = new Gson();
             Department departmentToUpdate = gson.fromJson(departmentJson, Department.class);
 
-            // Check if dept_id exists
-            Department existingDept = this.department.getDepartment(departmentToUpdate.getCompany(),
-                    departmentToUpdate.getId());
-            if (existingDept == null) {
-                logger.log(Level.WARNING, "Department ID {0} does not exist", departmentToUpdate.getId());
+            // Validate department exists
+            if (!department.validateDeptExists(departmentToUpdate.getCompany(), departmentToUpdate.getId())) {
                 return Response.status(Response.Status.NOT_FOUND)
                         .entity(new ErrorResponse("Department ID does not exist"))
                         .build();
             }
 
-            // Check if dept_no is unique across all departments
-            List<Department> allDepartments = this.department.getAll(departmentToUpdate.getCompany());
-            for (Department dept : allDepartments) {
-                if (dept.getDeptNo().equals(departmentToUpdate.getDeptNo())
-                        && dept.getId() != departmentToUpdate.getId()) {
-                    logger.log(Level.WARNING, "Department number {0} must be unique", departmentToUpdate.getDeptNo());
-                    return Response.status(Response.Status.BAD_REQUEST)
-                            .entity(new ErrorResponse("Department number must be unique")).build();
-                }
+            // Validate unique department number
+            if (!department.validateUniqueDeptNo(departmentToUpdate.getDeptNo(), departmentToUpdate.getCompany(),
+                    departmentToUpdate.getId())) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity(new ErrorResponse("Department number must be unique")).build();
             }
 
-            Department updatedDept = this.department.updateDepartment(departmentToUpdate);
+            Department updatedDept = department.updateDepartment(departmentToUpdate);
             if (updatedDept != null) {
                 logger.log(Level.INFO, "Department updated successfully: {0}", updatedDept);
                 return Response.status(Response.Status.OK)
@@ -181,17 +170,15 @@ public class DepartmentResource {
             logger.log(Level.INFO, "Deleting department with ID {0} from company {1}",
                     new Object[] { deptId, companyName });
 
-            // Check if dept_id exists
-            Department existingDept = this.department.getDepartment(companyName, deptId);
-            if (existingDept == null) {
-                logger.log(Level.WARNING, "Department ID {0} does not exist", deptId);
+            // Validate department exists
+            if (!department.validateDeptExists(companyName, deptId)) {
                 return Response.status(Response.Status.NOT_FOUND)
                         .entity(new ErrorResponse("Department ID does not exist"))
                         .build();
             }
 
             // Delete the department
-            if (this.department.deleteDepartment(companyName, deptId)) {
+            if (department.deleteDepartment(companyName, deptId)) {
                 logger.log(Level.INFO, "Department deleted successfully: {0}", deptId);
                 return Response.status(Response.Status.OK)
                         .entity(new SuccessResponse("Department deleted successfully")).build();
@@ -207,4 +194,5 @@ public class DepartmentResource {
                     .build();
         }
     }
+
 }

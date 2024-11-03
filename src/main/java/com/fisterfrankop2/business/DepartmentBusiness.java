@@ -8,20 +8,19 @@ import java.util.logging.Logger;
 import companydata.Department;
 
 public class DepartmentBusiness extends BusinessEntity {
+    private static final Logger logger = Logger.getLogger(DepartmentBusiness.class.getName());
 
     // Method to retrieve a single department by company name and department id
     public Department getDepartment(String companyName, int deptId) {
         if (companyName.isBlank()) {
-            java.util.logging.Logger.getLogger(BusinessEntity.class.getName())
-                    .log(java.util.logging.Level.SEVERE, "The company name is required.");
+            logger.log(java.util.logging.Level.SEVERE, "The company name is required.");
             return null;
         }
 
         try {
             return this.dl.getDepartment(companyName, deptId);
         } catch (Exception e) {
-            java.util.logging.Logger.getLogger(BusinessEntity.class.getName())
-                    .log(java.util.logging.Level.SEVERE, "Error retrieving department", e);
+            logger.log(java.util.logging.Level.SEVERE, "Error retrieving department", e);
             return null;
         }
     }
@@ -29,8 +28,7 @@ public class DepartmentBusiness extends BusinessEntity {
     // Method to retrieve all departments by company name
     public List<Department> getAll(String companyName) {
         if (companyName.isBlank()) {
-            java.util.logging.Logger.getLogger(BusinessEntity.class.getName())
-                    .log(java.util.logging.Level.SEVERE, "The company name is required.");
+            logger.log(java.util.logging.Level.SEVERE, "The company name is required.");
             return Collections.emptyList();
         }
 
@@ -42,8 +40,7 @@ public class DepartmentBusiness extends BusinessEntity {
         try {
             return this.dl.insertDepartment(department);
         } catch (Exception e) {
-            java.util.logging.Logger.getLogger(BusinessEntity.class.getName())
-                    .log(java.util.logging.Level.SEVERE, "Error inserting department", e);
+            logger.log(java.util.logging.Level.SEVERE, "Error inserting department", e);
             return null;
         }
     }
@@ -53,8 +50,7 @@ public class DepartmentBusiness extends BusinessEntity {
         try {
             return this.dl.updateDepartment(department);
         } catch (Exception e) {
-            java.util.logging.Logger.getLogger(BusinessEntity.class.getName())
-                    .log(java.util.logging.Level.SEVERE, "Error updating department", e);
+            logger.log(java.util.logging.Level.SEVERE, "Error updating department", e);
             return null;
         }
     }
@@ -64,16 +60,13 @@ public class DepartmentBusiness extends BusinessEntity {
         try {
             return this.dl.deleteDepartment(companyName, deptId) == 1;
         } catch (Exception e) {
-            java.util.logging.Logger.getLogger(BusinessEntity.class.getName())
-                    .log(java.util.logging.Level.SEVERE, "Error deleting department", e);
+            logger.log(java.util.logging.Level.SEVERE, "Error deleting department", e);
             return false;
         }
     }
 
     // Method to delete all departments
     public boolean deleteAllDepartments(String companyName) {
-        Logger logger = Logger.getLogger(DepartmentBusiness.class.getName());
-
         try {
             List<Department> departments = this.dl.getAllDepartment(companyName);
             for (Department department : departments) {
@@ -86,5 +79,26 @@ public class DepartmentBusiness extends BusinessEntity {
             logger.log(Level.SEVERE, "Error deleting all departments", e);
             return false;
         }
+    }
+
+    public boolean validateUniqueDeptNo(String deptNo, String companyName, Integer deptId) {
+        List<Department> allDepartments = getAll(companyName);
+        for (Department dept : allDepartments) {
+            if (dept.getDeptNo().equals(deptNo) && (deptId == null || dept.getId() != deptId)) {
+                logger.log(Level.WARNING, "Department number {0} must be unique", deptNo);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean validateDeptExists(String companyName, int deptId) {
+        Department department = getDepartment(companyName, deptId);
+        if (department == null) {
+            logger.log(Level.WARNING, "Department ID {0} does not exist in company {1}",
+                    new Object[] { deptId, companyName });
+            return false;
+        }
+        return true;
     }
 }

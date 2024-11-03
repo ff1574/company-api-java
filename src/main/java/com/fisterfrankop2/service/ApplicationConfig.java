@@ -18,5 +18,4 @@ public class ApplicationConfig extends jakarta.ws.rs.core.Application {
         resources.add(com.fisterfrankop2.service.TimecardResource.class);
         resources.add(com.fisterfrankop2.service.CompanyResource.class);
     }
-
 }
